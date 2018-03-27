@@ -18,14 +18,4 @@ const Tree & AVL_Tree::find ( const Tree & x ) const
 }
 
 
-treeNode* AVL_Tree::find ( const Tree & x , treeNode *t ) const
-{
-	if ( NULL == t )
-	 return NULL ;
-	 else if ( x < t -> element )
-	  return find ( x , t -> left ) ;
-	 else if ( t -> element < x )
-	  return find ( x , t -> right ) ;
-	else
-	return t ; // found it
-}
+

@@ -57,3 +57,12 @@ bool operator==(const Tree & t1, const Tree & t2)
       return false;
        
 }
+
+bool operator<(const Tree & t1, const Tree & t2)
+{
+      if((t1.spc_common<t2.spc_common )&&(t1.tree_id<t2.tree_id))
+      return true;
+      else
+      return false;
+       
+}

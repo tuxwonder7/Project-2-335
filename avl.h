@@ -46,11 +46,22 @@ class AVL_Tree
 		struct treeNode
 		{
 		Tree element ;
-		treeNode * firstChild ;
-		treeNode * nextSibling ;
+		treeNode * leftChild ;
+		treeNode * rightChild ;
 		}; treeNode *root;
-	treeNode* find ( const Tree & x , treeNode *t ) const;
+	treeNode* find ( const Tree & x , treeNode *t ) const
+{
+	if ( NULL == t )
+	 return NULL ;
+	 else if ( x < t -> element ) //Need to overload operator< in tree class
+	  return find ( x , t -> leftChild ) ;
+	 else if ( t -> element < x )
+	  return find ( x , t -> rightChild ) ;
+	else
+	return t ; // found it
+}
 };
+
 
 
 #endif
