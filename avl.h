@@ -17,7 +17,6 @@
 #include "tree.h"
 
 class AVL_Tree
-	
 	{
 	public :
 	AVL_Tree ( ); // default
@@ -49,17 +48,16 @@ class AVL_Tree
 		treeNode * leftChild ;
 		treeNode * rightChild ;
 		}; treeNode *root;
-	treeNode* find ( const Tree & x , treeNode *t ) const
-{
-	if ( NULL == t )
-	 return NULL ;
-	 else if ( x < t -> element ) //Need to overload operator< in tree class
-	  return find ( x , t -> leftChild ) ;
-	 else if ( t -> element < x )
-	  return find ( x , t -> rightChild ) ;
-	else
-	return t ; // found it
-}
+	
+	void insert ( const Tree & x , treeNode * & t ) ;
+	void remove ( const Tree & x , treeNode * & t ) ;
+	treeNode * find ( const Tree & x , treeNode * t )
+	const ;
+	treeNode * findMin ( treeNode * t ) const ;
+	treeNode * findMax ( treeNode * t ) const ;
+	void make_empty ( treeNode * t ) ;
+	void print ( ostream & out , treeNode * t ) const ;
+	treeNode * copy ( treeNode * t ) const ;
 };
 
 
