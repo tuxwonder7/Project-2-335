@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
    		     exit(1);
    		 }
 		fout.close();
-	 cout << "What " << endl;
+	// cout << "What " << endl;
 	 inputHandler newCensus;
 	 stringstream arg1(argv[1]);
 	 stringstream arg2(argv[2]);

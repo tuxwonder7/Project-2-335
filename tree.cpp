@@ -1,9 +1,10 @@
 #include "tree.h"
 #include <string>
 #include <iostream>
+
 using namespace std;
 Tree::Tree(const string & treedata){ 
-	cout << "The fuck " << endl;
+	//cout << "The fuck " << endl;
 	 string allInfo = treedata;
 	 stringstream iss(treedata);
 	 vector<string> splitString;
@@ -48,4 +49,11 @@ string Tree::write(){
 	string specInfoWrite = ospecInfo.str();
 	return specInfoWrite;
 }
-
+bool operator==(const Tree & t1, const Tree & t2)
+{
+      if((t1.spc_common==t2.spc_common )&&(t1.tree_id==t2.tree_id))
+      return true;
+      else
+      return false;
+       
+}

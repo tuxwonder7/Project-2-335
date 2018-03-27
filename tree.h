@@ -22,6 +22,7 @@ class Tree{
 	Tree(const string & treedata);
 	//Outputs to file through overloaded operator<<
 	friend ostream& operator<< (ostream & os, const Tree & t);
+	friend bool operator==(const Tree&t1, const Tree &t2);
 	//Not used currrently but returns string of elements in specific fashion
 	string write();
 	private:

@@ -15,7 +15,7 @@ void inputHandler::newCensusSystem(stringstream& iFile,stringstream& oFile){
 		 bool endofFile = false;
 		//instance of stupid treecontainer then use it below
 		while(endofFile != true){
-			cout << "What x" << endl;
+			//cout << "What x" << endl;
 			string treeInfo;
 			getline(inputFileHandling, treeInfo);
 			if(inputFileHandling.bad()  || inputFileHandling.eof()){endofFile = true;}
