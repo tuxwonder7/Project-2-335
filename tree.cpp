@@ -11,7 +11,7 @@ Tree::Tree(const string & treedata){
 	 stringstream iss(treedata);
 	 vector<string> splitString;
 	 string quote = "\"";
-	 int quoteCount = 0, quoteLocation = 0, stringIter = 0;
+	 
 	
    	    string singlePart; 
  	   while(getline(iss,singlePart)){
@@ -24,8 +24,6 @@ Tree::Tree(const string & treedata){
 	    }
 	    splitString.push_back(string(stringStart));
 	   }
-	
-	 quoteCount /= 2;
 	 //23 - 24, 25, 26, 37, 38 , 25
 	 stringstream(splitString[0]) >> tree_id ;
 	 stringstream(splitString[3]) >> tree_dbh;
@@ -67,6 +65,6 @@ bool operator<(const Tree & t1, const Tree & t2)
       else
       return false;
 }
-Tree& Tree::operator=(const Tree& other){
+/*Tree& Tree::operator=(const Tree& other){
 	cout << "Test" << endl;
-}
+}*/

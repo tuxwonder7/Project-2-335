@@ -112,9 +112,7 @@
          * Deep copy.
          */
         
-        const AVL_Tree &
-        AVL_Tree::
-        operator=( const AVL_Tree & rhs )
+        const AVL_Tree &AVL_Tree::operator=( const AVL_Tree & rhs )
         {
             if( this != &rhs )
             {
@@ -175,8 +173,7 @@
          * Return node containing the smallest item.
          */
         
-        AVL_Tree::treeNode *
-        AVL_Tree::findMin( treeNode *t ) const
+        AVL_Tree::treeNode * AVL_Tree::findMin( treeNode *t ) const
         {
             if( t == NULL)
                 return t;
@@ -191,8 +188,7 @@
          * Return node containing the largest item.
          */
         
-        AVL_Tree::treeNode *
-        AVL_Tree::findMax( treeNode *t ) const
+        AVL_Tree::treeNode * AVL_Tree::findMax( treeNode *t ) const
         {
             if( t == NULL )
                 return t;
@@ -209,8 +205,7 @@
          * Return node containing the matched item.
          */
         
-        AVL_Tree::treeNode *
-        AVL_Tree::find( const Tree & x, treeNode *t ) const
+        AVL_Tree::treeNode *AVL_Tree::find( const Tree & x, treeNode *t ) const
         {
             while( t != NULL )
                 if( x < t->element )
@@ -242,14 +237,12 @@
          * Internal method to clone subtree.
          */
         
-        AVL_Tree::treeNode *
-        AVL_Tree::clone( treeNode * t ) const
+        AVL_Tree::treeNode * AVL_Tree::clone( treeNode * t ) const
         {
             if( t == NULL )
                 return NULL;
             else
-                return new treeNode( t->element, clone( t->leftChild),
-                                              clone( t->rightChild), t->height );
+                return new treeNode( t->element, clone( t->leftChild),clone( t->rightChild), t->height );
         }
 
         /**

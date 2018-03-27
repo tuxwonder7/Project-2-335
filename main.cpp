@@ -12,7 +12,7 @@
 #include <iostream>
 #include <sstream>
 #include <cstdlib>
-#include "inputHandler.h"
+#include "tree_collection.h"
 
 using namespace std;
 int main(int argc, char* argv[])
@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
    		 }
 		fout.close();
 	// cout << "What " << endl;
-	 inputHandler newCensus;
+	 tree_collection newCensus;
 	 stringstream arg1(argv[1]);
 	 stringstream arg2(argv[2]);
 	
