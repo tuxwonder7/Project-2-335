@@ -3,6 +3,8 @@
 #include <iostream>
 
 using namespace std;
+Tree::Tree(){}
+Tree::Tree(const Tree&){}
 Tree::Tree(const string & treedata){ 
 	//cout << "The fuck " << endl;
 	 string allInfo = treedata;
@@ -64,5 +66,7 @@ bool operator<(const Tree & t1, const Tree & t2)
       return true;
       else
       return false;
-       
+}
+Tree& Tree::operator=(const Tree& other){
+	cout << "Test" << endl;
 }

@@ -11,6 +11,7 @@
 *******************************************************************************/
 #include <iostream>
 #include <sstream>
+#include <cstdlib>
 #include "inputHandler.h"
 
 using namespace std;

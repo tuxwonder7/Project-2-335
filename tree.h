@@ -18,12 +18,15 @@
 using namespace std;
 class Tree{
 	public:
+	Tree();
+	Tree(const Tree&);
 	//Default constructor to deal with string variable (references but only puts data into private elements
 	Tree(const string & treedata);
 	//Outputs to file through overloaded operator<<
 	friend ostream& operator<< (ostream & os, const Tree & t);
 	friend bool operator==(const Tree&t1, const Tree &t2);
 	friend bool operator<(const Tree & t1, const Tree & t2);
+	Tree& operator=(const Tree& other);
 	//Not used currrently but returns string of elements in specific fashion
 	string write();
 	private:
