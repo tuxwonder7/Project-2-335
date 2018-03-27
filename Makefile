@@ -19,19 +19,19 @@
 # If you want to force a recompile, type "touch *.cpp" and then "make"
 
 CXX       := /usr/bin/g++
-CXXFLAGS  += -Wall -g 
+CXXFLAGS  += -no-pie -Wall -g 
 
 all: project2 
 
 .PHONY: clean  cleanall
 clean:
-	rm -f main.o tree_collection.o tree.o avl.o 
+	rm -f main.o tree_collection.o tree.o avl.o inputHandler.o
 
 cleanall:
-	rm -f main.o tree_collection.o tree.o avl.o project2  
+	rm -f main.o tree_collection.o tree.o avl.o inputHandler.o project2  
 	
-project2:  tree_collection.o tree.o main.o avl.o tree_species.o
-	$(CXX) $(CXXFLAGS) -o project2  tree_collection.o tree.o main.o avl.o tree_species.o
+project2:  tree_collection.o tree.o main.o avl.o tree_species.o inputHandler.o
+	$(CXX) $(CXXFLAGS) -o project2  tree_collection.o tree.o main.o avl.o tree_species.o inputHandler.o
 
 main.o: main.cpp tree_collection.h tree.h tree_species.h 
 	$(CXX) $(CXXFLAGS)  -c main.cpp
@@ -44,3 +44,5 @@ tree.o: tree.cpp tree.h
 
 avl.o: avl.cpp avl.h tree.h
 	$(CXX) $(CXXFLAGS) -c avl.cpp
+inputHandler.o: inputHandler.cpp inputHandler.h 
+	$(CXX) $(CXXFLAGS) -c inputHandler.cpp
