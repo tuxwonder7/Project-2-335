@@ -42,24 +42,18 @@ class AVL_Tree
 	void insert ( const Tree & x ); // insert element x
 	void remove ( const Tree & x ); // remove element x
 	private:
+		
 		struct treeNode
 		{
 		Tree element ;
 		treeNode * leftChild ;
 		treeNode * rightChild ;
+		//friend AVL_Tree;
+		// treeNode(){}
 		}; treeNode *root;
 	void insert ( const Tree & x , treeNode * & t ) ;
 	void remove ( const Tree & x , treeNode * & t ) ;
-	treeNode * find ( const Tree & x , treeNode * t )const{
-	if ( NULL == t )
-	 return NULL ;
-	 else if ( x < t -> element ) //Need to overload operator< in tree class
-	  return find ( x , t -> leftChild ) ;
-	 else if ( t -> element < x )
-	  return find ( x , t -> rightChild ) ;
-	else
-	return t ; // found it
-	}
+	treeNode * find ( const Tree & x , treeNode * t )const;
 	treeNode * findMin ( treeNode * t ) const ;
 	treeNode * findMax ( treeNode * t ) const ;
 	void make_empty ( treeNode * t ) ;
