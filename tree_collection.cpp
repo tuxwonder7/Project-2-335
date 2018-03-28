@@ -10,41 +10,30 @@ void Tree_collection::newCensusSystem(stringstream& iFile,stringstream& oFile){
 		 ifstream inputFileHandling;
 		 inputFileHandling.open(inputFile.c_str());
 		 ifstream secondFileHandling;
-		// secondFileHandling.open(outputFile.c_str());
-		   
-		    AVL_Tree newAVLTree;
-		   // istream& is = secondFileHandling;
-		   // while(currCommands.get_next(is)){ cout << "REE" << endl;}
-		  
-
-
-			//secondFileHandling.open(outputFile.c_str());
-			
-			 bool endofFile = false;
-			int count = 0;
-			//instance of stupid treecontainer then use it below
-			while(endofFile != true){
-				//cout << "What x" << endl;
+		
+		bool endofFile = false;
+	
+		//instance of stupid treecontainer then use it below
+		while(endofFile != true){
+				
 				string treeInfo = "";
 				getline(inputFileHandling, treeInfo);
 				if(inputFileHandling.bad()  || inputFileHandling.eof()){cout << "break" << endl;endofFile = true;}
 		 		else{	
-				//cout << "What z " << treeInfo << endl;
+				
 				Tree newTree(treeInfo);
-				//cout << newTree << endl;
-				//treecontainer.avl.push_back(thing)
+				
 				newAVLTree.insert(newTree);
-				//cout << "What y" << endl;
-		 		//newqueue->push_back(treeInfo);
 				
 		  		}
-				count++;
-		 	}
+			
+		 }
+			cout << total_tree_count() << " total nodes " << endl;
 			inputFileHandling.close();
 			  Command currCommands;
 			 checkCommandFunc(secondFileHandling, outputFile, currCommands);
 
-			cout << "count " << count << endl;
+			
 			//newAVLTree.printTree();
 		
 }
@@ -54,7 +43,7 @@ void Tree_collection::checkCommandFunc(ifstream &fin, string fileName, Command& 
  	   int       zipcode;
   	   double    latitude, longitude, distance;
   	   bool      result;
-	cout << " Check command f " << fileName <<  endl;
+	cout << "Check command f " << fileName <<  endl;
 	fin.open( fileName, ios::in );
 	while ( ! fin.eof() ) {
         if ( ! command.get_next(fin) ) {
@@ -88,7 +77,39 @@ void Tree_collection::checkCommandFunc(ifstream &fin, string fileName, Command& 
         }
     }
     fin.close();
+}
 
+int Tree_collection::total_tree_count() const{
+	//newAVLTree.AVL_TreeNodes_count();
+	return newAVLTree.AVL_TreeNodes_count();
+}
+
+int Tree_collection::count_of_tree_species ( const string& species_name ) const{
 
 }
+int Tree_collection::count_of_trees_in_boro( const string& boro_name ) const{
+
+}
+list<string> Tree_collection::get_matching_species(const string & species_name) const{
+
+}
+list<string> Tree_collection::get_all_in_zipcode(int zipcode) const{
+
+}
+list<string> Tree_collection::get_all_near(double latitude, double longitude, double distance) const{
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -14,6 +14,7 @@
 #pragma once
 #include "command.h"
 #include "avl.h"
+#include "tree_species.h"
 #include <sys/stat.h>
 #include <sstream>
 #include <fstream>
@@ -48,8 +49,8 @@ class Tree_collection{
 	 //Elements, names imply purpose
 	 string inputFile;
 	 string outputFile;
-
-
+	 AVL_Tree newAVLTree;
+	 SpeciesName newTreeSpecies(string s = " ");
 };
 
 

@@ -24,7 +24,7 @@
         
         AVL_Tree::~AVL_Tree( )
         {
-            makeEmpty( );
+            clear( );
         }
 
         /**
@@ -42,9 +42,53 @@
         
         void AVL_Tree::remove( const Tree & x )
         {
-            cout << "Sorry, remove unimplemented; " << x <<
-                 " still present" << endl;
+          remove(x, root);
         }
+	void AVL_Tree::remove ( const Tree & x , treeNode * & t ){
+		if ( t == NULL )
+		// can 't delete from an empty tree
+		return ;
+		if ( x < t -> element ) {
+		// delete from the left subtree
+		remove ( x , t -> leftChild ) ;
+		// check if the heights of the subtrees are now too different
+		if ( height ( t -> rightChild ) - height ( t -> leftChild ) == 2 ) // unbalanced
+		if ( height (( t -> rightChild ) -> rightChild ) >= height (( t -> rightChild ) -> leftChild ) )
+		RR_rotation ( t ) ;
+		else
+		RL_rotation ( t ) ;
+		}
+		else if ( t -> element < x ) {
+		// delete from the right subtree
+		remove ( x , t -> rightChild ) ;
+		if ( height ( t -> leftChild ) - height ( t -> rightChild ) == 2 ) // unbalanced
+		// left subtree too tall
+		if ( height (( t -> leftChild ) -> leftChild ) >= height (( t -> leftChild ) -> rightChild ) )
+		LL_rotation ( t ) ;
+		else
+		LR_rotation ( t ) ;
+		}
+		else { // delete this node
+		if (( t -> leftChild != NULL ) && (t -> rightChild != NULL ) ) { // two non - empty
+		t -> element = findMin (t -> rightChild ) -> element ;
+		remove (t -> element , t -> rightChild ) ;
+		if ( height ( t -> leftChild ) - height ( t -> rightChild ) == 2 ) //
+		if ( height (( t -> leftChild ) -> leftChild ) >= height (( t -> leftChild ) -> rightChild ) )
+		LL_rotation ( t ) ;
+		else
+		LR_rotation ( t ) ;
+		}
+		else {
+		treeNode* OldNode = t ;
+		t = (t -> leftChild != NULL ) ? t -> leftChild : t -> rightChild ;
+		delete OldNode ;
+		}
+		}
+		if ( NULL != t )
+		t -> height = max ( height ( t -> leftChild ) , height ( t -> rightChild ) ) + 1;
+	}
+
+	
 
         /**
          * Find the smallest item in the tree.
@@ -81,9 +125,9 @@
          * Make the tree logically empty.
          */
         
-        void AVL_Tree::makeEmpty( )
+        void AVL_Tree::clear( )
         {
-            makeEmpty( root );
+            clear( root );
         }
 
         /**
@@ -116,7 +160,7 @@
         {
             if( this != &rhs )
             {
-                makeEmpty( );
+                clear( );
                 root = clone( rhs.root );
             }
             return *this;
@@ -145,25 +189,25 @@
         {
 		//cout << "Temp checking" << endl;
             if( t == NULL ){
-		//cout << "Null?, assuming root" << endl;
+		//incrementTotal();
                 t = new treeNode( x, NULL, NULL );}
             else if( x < t->element )
             {
                 insert( x, t->leftChild);
                 if( height( t->leftChild) - height( t->rightChild) == 2 )
                     if( x < t->leftChild->element )
-                        rotateWithLeftChild( t );
+                        LL_rotation( t );
                     else
-                        doubleWithLeftChild( t );
+                        LR_rotation( t );
             }
             else if( t->element < x )
             {
                 insert( x, t->rightChild);
                 if( height( t->rightChild) - height( t->leftChild) == 2 )
                     if( t->rightChild->element < x )
-                        rotateWithRightChild( t );
+                        RR_rotation( t );
                     else
-                        doubleWithRightChild( t );
+                        RL_rotation( t );
             }
             else
                 ;  // Duplicate; do nothing
@@ -174,7 +218,8 @@
          * Internal method to find the smallest item in a subtree t.
          * Return node containing the smallest item.
          */
-        
+        void AVL_Tree::incrementTotal(){ totalNodeInsert++; }
+	void AVL_Tree::decrementTotal(){ totalNodeInsert--; }
         AVL_Tree::treeNode * AVL_Tree::findMin( treeNode *t ) const
         {
             if( t == NULL)
@@ -224,12 +269,12 @@
          * Internal method to make subtree empty.
          */
         
-        void AVL_Tree::makeEmpty( treeNode * & t ) const
+        void AVL_Tree::clear( treeNode * & t ) const
         {
             if( t != NULL )
             {
-                makeEmpty( t->leftChild);
-                makeEmpty( t->rightChild);
+                clear( t->leftChild);
+                clear( t->rightChild);
                 delete t;
             }
             t = NULL;
@@ -271,7 +316,7 @@
          * Update heights, then set new root.
          */
         
-        void AVL_Tree::rotateWithLeftChild( treeNode * & k2 ) const
+        void AVL_Tree::LL_rotation( treeNode * & k2 ) const
         {
             treeNode *k1 = k2->leftChild;
             k2->leftChild= k1->rightChild;
@@ -287,7 +332,7 @@
          * Update heights, then set new root.
          */
         
-        void AVL_Tree::rotateWithRightChild( treeNode * & k1 ) const
+        void AVL_Tree::RR_rotation( treeNode * & k1 ) const
         {
             treeNode *k2 = k1->rightChild;
             k1->rightChild= k2->leftChild;
@@ -304,10 +349,10 @@
          * Update heights, then set new root.
          */
         
-        void AVL_Tree::doubleWithLeftChild( treeNode * & k3 ) const
+        void AVL_Tree::LR_rotation( treeNode * & k3 ) const
         {
-            rotateWithRightChild( k3->leftChild);
-            rotateWithLeftChild( k3 );
+            RR_rotation( k3->leftChild);
+            LL_rotation( k3 );
         }
 
         /**
@@ -317,10 +362,10 @@
          * Update heights, then set new root.
          */
         
-        void AVL_Tree::doubleWithRightChild( treeNode * & k1 ) const
+        void AVL_Tree::RL_rotation( treeNode * & k1 ) const
         {
-            rotateWithLeftChild( k1->rightChild);
-            rotateWithRightChild( k1 );
+            LL_rotation( k1->rightChild);
+            RR_rotation( k1 );
         }
 
         /**
@@ -342,6 +387,49 @@
 
 	list < Tree >& AVL_Tree::findallmatches ( const Tree & x ) const{
 	
-
-
 	}
+
+
+
+	unsigned int AVL_Tree::AVL_TreeNodes_count_recursive(const treeNode *root) const
+	{
+	    unsigned int count = 1;
+	    if (root->leftChild != NULL) {
+	       count += AVL_TreeNodes_count_recursive(root->leftChild);
+	    }
+	    if (root->rightChild != NULL) {
+		count += AVL_TreeNodes_count_recursive(root->rightChild);
+	    }
+	    return count;
+	}
+	 
+	unsigned int AVL_Tree::AVL_TreeNodes_count() const
+	{
+	    unsigned int count = 0;
+	    if (this->root != NULL) {
+		count = AVL_TreeNodes_count_recursive(this->root);
+	    }
+	    return count;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
