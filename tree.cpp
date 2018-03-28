@@ -44,6 +44,7 @@ Tree::Tree(const string & treedata){
 	 status = status = splitString[6];
 	 health = splitString[7];
 	 spc_common = splitString[9];
+	 transform(spc_common.begin(), spc_common.end(), spc_common.begin(), ::tolower);
 	 address = splitString[24];
 	 stringstream(splitString[25]) >> zipcode ;
 	 boroname = splitString[26];
