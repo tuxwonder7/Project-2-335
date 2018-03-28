@@ -143,8 +143,10 @@
         
         void AVL_Tree::insert( const Tree & x, treeNode * & t ) const
         {
-            if( t == NULL )
-                t = new treeNode( x, NULL, NULL );
+		//cout << "Temp checking" << endl;
+            if( t == NULL ){
+		//cout << "Null?, assuming root" << endl;
+                t = new treeNode( x, NULL, NULL );}
             else if( x < t->element )
             {
                 insert( x, t->leftChild);
@@ -328,22 +330,13 @@
         
         void AVL_Tree::printTree( treeNode *t ) const
         {
+		
+		//cout << t->element<< " COmmon" << endl;
             if( t != NULL )
             {
                 printTree( t->leftChild);
-                cout << t->element << endl;
+                cout << t->element << height(t) << endl;//" REE and root height " << height(t) 
                 printTree( t->rightChild);
             }
         }
-	
-
-
-
-
-
-
-
-
-
-
 

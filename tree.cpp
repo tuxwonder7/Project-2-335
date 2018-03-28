@@ -4,7 +4,21 @@
 
 using namespace std;
 Tree::Tree(){}
-Tree::Tree(const Tree&){}
+Tree::Tree(const Tree& x){
+	 allInfo = x.allInfo;
+	 spc_common =  x.spc_common;
+	 specInfo =  x.specInfo;
+	 tree_id = x.tree_id;
+	 tree_dbh = x.tree_dbh;
+	 status = x.status;
+	 health = x.health;
+	 address = x.address;
+	 boroname = x.boroname;
+	 zipcode =  x.zipcode;
+	 latitude = x.latitude;
+	 longitude = x.longitude;
+	
+}
 Tree::Tree(const string & treedata){ 
 	//cout << "The fuck " << endl;
 	 string allInfo = treedata;
@@ -39,6 +53,7 @@ Tree::Tree(const string & treedata){
 }
 
 ostream& operator<< (ostream & os, const Tree & t){
+	//cout << " <<< ree?" << endl;
 	os << t.spc_common << "," << t.tree_id << ","<< t.tree_dbh << "," << t.status << "," <<  t.health << "," << t.address 
 	<< "," << t.boroname << "," << t.zipcode << "," << t.latitude << "," << t.longitude << endl;
 }
@@ -60,11 +75,17 @@ bool operator==(const Tree & t1, const Tree & t2)
 
 bool operator<(const Tree & t1, const Tree & t2)
 {
-      if((t1.spc_common<t2.spc_common )&&(t1.tree_id<t2.tree_id))
-      return true;
+      if(t1.spc_common < t2.spc_common)
+	return true;
+      else if(t1.spc_common == t2.spc_common){
+	if (t1.tree_id < t2.tree_id)
+		return true;
+	else 
+		return false;
+      }
       else
-      return false;
+		return false;
 }
-/*Tree& Tree::operator=(const Tree& other){
+Tree& Tree::operator=(const Tree& rhs){
 	cout << "Test" << endl;
-}*/
+}

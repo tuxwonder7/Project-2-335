@@ -13,7 +13,6 @@
 #define __tree_collection_h__
 #pragma once
 
-#include "tree.h"
 #include "avl.h"
 #include <sys/stat.h>
 #include <sstream>
