@@ -20,6 +20,7 @@ using namespace std;
 class Tree{
 	public:
 	Tree();
+	Tree ( int id, int diam, string status, string health, string spc, int zip, string addr, string boro, double latitude, double longitude );
 	Tree(const Tree&);
 	//Default constructor to deal with string variable (references but only puts data into private elements
 	Tree(const string & treedata);
@@ -28,6 +29,15 @@ class Tree{
 	friend bool operator==(const Tree&t1, const Tree &t2);
 	friend bool operator<(const Tree & t1, const Tree & t2);
 	Tree& operator=(const Tree& other);
+	friend bool samename(const Tree & t1,const Tree & t2);
+	friend bool islessname(const Tree & t1,const Tree & t2);
+	string common_name() const;
+	string borough_name() const; 
+	string nearest_address() const;
+	int diameter() const; 
+	int zip() const;
+	void get_position(double & latitude,double & longitude) const;
+
 	//Not used currrently but returns string of elements in specific fashion
 	string write();
 	private:

@@ -90,3 +90,46 @@ bool operator<(const Tree & t1, const Tree & t2)
 Tree& Tree::operator=(const Tree& rhs){
 	cout << "Test" << endl;
 }
+
+bool samename(const Tree & t1,const Tree & t2){
+	 if(t1.spc_common==t2.spc_common ) return true;
+	 else return false;
+}
+bool islessname(const Tree & t1,const Tree & t2){
+	if(t1.spc_common < t2.spc_common) return true;
+	else return false;
+}
+string Tree::common_name() const{
+	return this->spc_common;
+}
+string Tree::borough_name() const{
+	return this->boroname;
+}
+
+string Tree::nearest_address() const{
+	return this->address;
+}	
+int Tree::diameter() const{
+	return this->tree_dbh;
+}
+int Tree::zip() const{
+	return this->zipcode;
+}
+void Tree::get_position(double & latitude,double & longitude) const{
+	latitude = this->latitude;
+	longitude = this->longitude;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
