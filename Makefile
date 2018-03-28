@@ -25,15 +25,15 @@ all: project2
 
 .PHONY: clean  cleanall
 clean:
-	rm -f main.o tree_collection.o tree.o avl.o inputHandler.o
+	rm -f main.o tree_collection.o tree.o avl.o 
 
 cleanall:
-	rm -f main.o tree_collection.o tree.o avl.o inputHandler.o project2  
+	rm -f main.o tree_collection.o tree.o avl.o project2  
 	
-project2:  tree_collection.o tree.o main.o avl.o tree_species.o inputHandler.o
-	$(CXX) $(CXXFLAGS) -o project2  tree_collection.o tree.o main.o avl.o tree_species.o inputHandler.o
+project2:  tree_collection.o tree.o main.o avl.o tree_species.o  command.o
+	$(CXX) $(CXXFLAGS) -o project2  tree_collection.o tree.o main.o avl.o tree_species.o  command.o
 
-main.o: main.cpp tree_collection.h tree.h tree_species.h 
+main.o: main.cpp tree_collection.h tree.h tree_species.h avl.h command.h
 	$(CXX) $(CXXFLAGS)  -c main.cpp
 
 tree_collection.o: tree_collection.cpp tree_collection.h tree.h tree_species.h
@@ -44,5 +44,11 @@ tree.o: tree.cpp tree.h
 
 avl.o: avl.cpp avl.h tree.h
 	$(CXX) $(CXXFLAGS) -c avl.cpp
-inputHandler.o: inputHandler.cpp inputHandler.h 
-	$(CXX) $(CXXFLAGS) -c inputHandler.cpp
+
+command.o: commandtester.cpp command.h 
+	$(CXX) $(CXXFLAGS) -c commandtester.cpp
+
+
+
+
+

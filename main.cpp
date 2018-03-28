@@ -24,19 +24,19 @@ int main(int argc, char* argv[])
       		   cerr << "Usage: " << argv[0] << " input_file command_required\n";
        		  exit(1);
     		 }  
-		 fin.open( argv[1]);
+		 fin.open( argv[1], ios::in);
 		 if ( !fin ) {
 			cerr << "Could not open" << argv[1] << " for reading.\n";
 			exit(1);
 		 }  
-		  fout.open(argv[2]);
+		  fout.open(argv[2], ios::in);
    		 if ( fout.fail() ) {
     		    cerr << "Could not open " << argv[2] << " for reading.\n";
    		     exit(1);
    		 }
-		fout.close();
+		//fout.close();
 	// cout << "What " << endl;
-	 tree_collection newCensus;
+	 Tree_collection newCensus;
 	 stringstream arg1(argv[1]);
 	 stringstream arg2(argv[2]);
 	
