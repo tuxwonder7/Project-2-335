@@ -46,45 +46,25 @@
         }
 	void AVL_Tree::remove ( const Tree & x , treeNode * & t ){
 		if ( t == NULL )
-		// can 't delete from an empty tree
-		return ;
-		if ( x < t -> element ) {
-		// delete from the left subtree
-		remove ( x , t -> leftChild ) ;
-		// check if the heights of the subtrees are now too different
-		if ( height ( t -> rightChild ) - height ( t -> leftChild ) == 2 ) // unbalanced
-		if ( height (( t -> rightChild ) -> rightChild ) >= height (( t -> rightChild ) -> leftChild ) )
-		RR_rotation ( t ) ;
-		else
-		RL_rotation ( t ) ;
+		t = new treeNode ( x , NULL , NULL ) ;
+		else if ( x < t -> element ) {
+			insert ( x , t -> leftChild ) ;
+			if ( height ( t -> leftChild ) - height ( t -> rightChild ) == 2 )
+			if ( x < t -> leftChild -> element )
+			LL_rotation ( t ) ;
+			else
+			LR_rotation ( t ) ;
 		}
 		else if ( t -> element < x ) {
-		// delete from the right subtree
-		remove ( x , t -> rightChild ) ;
-		if ( height ( t -> leftChild ) - height ( t -> rightChild ) == 2 ) // unbalanced
-		// left subtree too tall
-		if ( height (( t -> leftChild ) -> leftChild ) >= height (( t -> leftChild ) -> rightChild ) )
-		LL_rotation ( t ) ;
+			insert ( x , t -> rightChild ) ;
+			if ( height ( t -> rightChild ) - height ( t -> leftChild ) == 2 )
+			if ( t -> rightChild -> element < x )
+			RR_rotation ( t ) ;
+			else
+			RL_rotation ( t ) ;
+		}
 		else
-		LR_rotation ( t ) ;
-		}
-		else { // delete this node
-		if (( t -> leftChild != NULL ) && (t -> rightChild != NULL ) ) { // two non - empty
-		t -> element = findMin (t -> rightChild ) -> element ;
-		remove (t -> element , t -> rightChild ) ;
-		if ( height ( t -> leftChild ) - height ( t -> rightChild ) == 2 ) //
-		if ( height (( t -> leftChild ) -> leftChild ) >= height (( t -> leftChild ) -> rightChild ) )
-		LL_rotation ( t ) ;
-		else
-		LR_rotation ( t ) ;
-		}
-		else {
-		treeNode* OldNode = t ;
-		t = (t -> leftChild != NULL ) ? t -> leftChild : t -> rightChild ;
-		delete OldNode ;
-		}
-		}
-		if ( NULL != t )
+		; // Duplicate ; do nothing
 		t -> height = max ( height ( t -> leftChild ) , height ( t -> rightChild ) ) + 1;
 	}
 
@@ -115,8 +95,7 @@
          * Return the matching item or ITEM_NOT_FOUND if not found.
          */
         
-        const Tree & AVL_Tree::
-                                 find( const Tree & x ) const
+        const Tree & AVL_Tree::find( const Tree & x ) const
         {
             return elementAt( find( x, root ) );
         }
@@ -140,17 +119,7 @@
             return root == NULL;
         }
 
-        /**
-         * Print the tree contents in sorted order.
-         */
-        
-        void AVL_Tree::printTree( ) const
-        {
-            if( isEmpty( ) )
-                cout << "Empty tree" << endl;
-            else
-                printTree( root );
-        }
+     
 
         /**
          * Deep copy.
@@ -188,9 +157,16 @@
         void AVL_Tree::insert( const Tree & x, treeNode * & t ) const
         {
 		//cout << "Temp checking" << endl;
+	    
             if( t == NULL ){
-		//incrementTotal();
-                t = new treeNode( x, NULL, NULL );}
+		
+                t = new treeNode( x, NULL, NULL );
+		//cout << " THINGGGG " << t->element.borough_name() << endl;
+		const_cast<AVL_Tree *>(this)->allTreeBoro.push_back(t->element.borough_name());
+		const_cast<AVL_Tree *>(this)->allSpeciesInputed.push_back(t->element.common_name());
+		//const_cast<AVL_Tree *>(this)->allSpeciesIDInputed.push_back(t->element.currID());
+		
+		}
             else if( x < t->element )
             {
                 insert( x, t->leftChild);
@@ -211,6 +187,7 @@
             }
             else
                 ;  // Duplicate; do nothing
+		
             t->height = max( height( t->leftChild), height( t->rightChild) ) + 1;
         }
 
@@ -254,15 +231,14 @@
         
         AVL_Tree::treeNode *AVL_Tree::find( const Tree & x, treeNode *t ) const
         {
-            while( t != NULL )
-                if( x < t->element )
-                    t = t->leftChild;
-                else if( t->element < x )
-                    t = t->rightChild;
-                else
-                    return t;    // Match
-
-            return NULL;   // No match
+        if ( NULL == t )
+		return NULL ;
+	else if ( x < t -> element )
+		return find ( x , t -> leftChild ) ;
+	else if ( t -> element < x )
+		return find ( x , t -> rightChild ) ;
+	else
+	    return t ; // found it
         }
 
         /**
@@ -373,17 +349,51 @@
          * t points to the node that roots the tree.
          */
         
-        void AVL_Tree::printTree( treeNode *t ) const
+        void AVL_Tree::printTree( treeNode *t ) const //preorder
         {
 		
 		//cout << t->element<< " COmmon" << endl;
             if( t != NULL )
             {
+		 cout << t->element << height(t)  << " Left child call " << endl;//" REE and root height " << height(t)
                 printTree( t->leftChild);
-                cout << t->element << height(t) << endl;//" REE and root height " << height(t) 
+               	 cout << "right child" << endl;
                 printTree( t->rightChild);
             }
         }
+
+
+	   /**
+         * Print the tree contents in sorted order.
+         */
+        
+        void AVL_Tree::printTree( ) const
+        {
+            if( isEmpty( ) )
+                cout << "Empty tree" << endl;
+            else
+                printTree( root );
+        }
+
+
+
+	/* Function to print level order traversal a tree*/
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	list < Tree >& AVL_Tree::findallmatches ( const Tree & x ) const{
 	
@@ -411,13 +421,67 @@
 	    }
 	    return count;
 	}
+	unsigned int AVL_Tree::AVL_TreeNodes_count_of_tree_species(const string& species_name) const{
+	    unsigned int count = 0;
+	    if (this->root != NULL) {
+		//cout << " ree" << endl;
+		cout << this->root->element << endl;
+		//count = AVL_TreeNodes_count_of_tree_species_recursive(species_name, this->root);
+	    }
+	    return count;
+	}
+	unsigned int AVL_Tree::AVL_TreeNodes_count_of_tree_species_recursive(const string& species_name, const treeNode *root) const{
+	 unsigned int count = 0	;	
+	if ( NULL == root )
+		return count ;
+	else if ( species_name < root -> element.common_name() )
+		AVL_TreeNodes_count_of_tree_species_recursive( species_name , root -> leftChild ) ;
+	else if ( root -> element.common_name() < species_name )
+		AVL_TreeNodes_count_of_tree_species_recursive( species_name , root -> rightChild ) ;
+	else{
+	    count++; // found one
+		AVL_TreeNodes_count_of_tree_species_recursive( species_name , root -> leftChild );	
+	  }
+	}
 
 
+/*
+
+unsigned int count = 1;
+	    cout << species_name << " and " << root -> element.common_name() << root->element.zip() << endl;
+	    if ((root->leftChild != NULL) && ( species_name < root -> element.common_name())) {
+		cout << "test1" << endl;
+	       count += AVL_TreeNodes_count_of_tree_species_recursive(species_name, root->leftChild);
+	    }
+	    if ((root->rightChild != NULL) && ( root -> element.common_name() < species_name  )) {
+		cout << "test2" << endl;
+		if(r
+		count += AVL_TreeNodes_count_of_tree_species_recursive(species_name, root->rightChild);
+	    }
+	    return count;
+*/
 
 
-
-
-
+	 int AVL_Tree::getTotalSpec(const string& species_name) const{ 
+	 int count = 0; 
+	 for(int x = 0; x < allSpeciesInputed.size(); x++){
+	  if(allSpeciesInputed.at(x) == species_name) count++;
+	   }  
+	 return count;
+	 }
+	int AVL_Tree::getTotalBoro(const string& boro_name)const {
+		
+ 		int count = 0;
+		//cout << " reetree boro count " << allTreeBoro.size() << endl;
+		for(int x = 0; x < allTreeBoro.size(); x++){
+		 if(allTreeBoro.at(x) == boro_name){
+		  
+		  count++;
+		 }
+		//  cout << count << "De count and thing " << allTreeBoro.at(x)  << endl;
+		}
+		return count;
+	    }
 
 
 

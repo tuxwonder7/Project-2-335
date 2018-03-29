@@ -14,7 +14,10 @@
 #define _avl_h_
 #include <iostream>
 #include <list>
+#include <vector>
 #include "tree.h"
+static const int ALLOWED_IMBALANCE = 1;
+
    class AVL_Tree
         {
           public:
@@ -37,8 +40,21 @@
 	    void incrementTotal();
 	    void decrementTotal();
 	    unsigned int AVL_TreeNodes_count() const;
+	    unsigned int AVL_TreeNodes_count_of_tree_species(const string& species_name) const;
+	    int getTotalSpec(const string& species_name) const;
+	    int getTotalBoro(const string& boro_name)const;
+
+
+
+
+
+
+
+	 //   int const allSpeciesIDInputed(const string& boro_name)const {int count = 0; for(int x = 0; x < allTreeBoro.size(); x++){if(allTreeBoro.at(x) == boro_name) count++;} return count;}
           private:
-          
+            vector<string> allSpeciesInputed;
+	    vector<string> allTreeBoro;
+	   // vector<int> allSpeciesIDInputed;
 	    struct treeNode
 		{
 		Tree element ;
@@ -67,6 +83,7 @@
             void LR_rotation( treeNode * & k3 ) const;
             void RL_rotation( treeNode * & k1 ) const;
 	    unsigned int AVL_TreeNodes_count_recursive(const treeNode *root) const;
+	    unsigned int AVL_TreeNodes_count_of_tree_species_recursive(const string& species_name, const treeNode *root) const;
 	    void  remove ( const Tree & x , treeNode * & t );
 
   };

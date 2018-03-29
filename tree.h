@@ -13,6 +13,7 @@
 #define _tree_h_
 #pragma once
 #include <string>
+#include <string.h>
 #include <sstream>
 #include <vector>
 #include <algorithm>
@@ -36,6 +37,7 @@ class Tree{
 	string nearest_address() const;
 	int diameter() const; 
 	int zip() const;
+	int currID() const;
 	void get_position(double & latitude,double & longitude) const;
 
 	//Not used currrently but returns string of elements in specific fashion

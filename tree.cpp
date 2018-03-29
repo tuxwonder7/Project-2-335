@@ -47,7 +47,7 @@ Tree::Tree(const string & treedata){
 	 transform(spc_common.begin(), spc_common.end(), spc_common.begin(), ::tolower);
 	 address = splitString[24];
 	 stringstream(splitString[25]) >> zipcode ;
-	 boroname = splitString[26];
+	 boroname = splitString[29];
    	 stringstream(splitString[38]) >> longitude;
 	 stringstream(splitString[37]) >> latitude;
 	
@@ -76,9 +76,9 @@ bool operator==(const Tree & t1, const Tree & t2)
 
 bool operator<(const Tree & t1, const Tree & t2)
 {
-      if(t1.spc_common < t2.spc_common)
+      if(t1.spc_common.compare(t2.spc_common) < 0)
 	return true;
-      else if(t1.spc_common == t2.spc_common){
+      else if(t1.spc_common.compare(t2.spc_common) == 0){
 	if (t1.tree_id < t2.tree_id)
 		return true;
 	else 
@@ -120,9 +120,7 @@ void Tree::get_position(double & latitude,double & longitude) const{
 	longitude = this->longitude;
 }
 
-
-
-
+int Tree::currID() const{ return this->tree_id;}
 
 
 

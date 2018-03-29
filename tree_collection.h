@@ -19,14 +19,16 @@
 #include <sstream>
 #include <fstream>
 #include <iostream>
-
-
+#include <utility>
+#include <algorithm>
+#include <vector>
+#include <set>
 
 using namespace std;	
 
 class Tree_collection{
 	public:
-	Tree_collection(){}
+	Tree_collection();
 	~Tree_collection(){}
 	//Checks if the input follows conditions regarding input file, output file, integer for coin flip, and if it succeded in total
 	//bool inputVerify(stringstream& iFile,stringstream& oFile, stringstream& iV, bool* sucessfulHandling);
@@ -40,7 +42,10 @@ class Tree_collection{
 	list<string> get_all_near(double latitude, double longitude, double distance) const;
 	void checkCommandFunc(ifstream &fin, string fileName, Command& command);
 
-
+	struct Vector3d{
+	string borosV = "";
+	int boroInt = 0;
+	};
 
 
 
@@ -50,7 +55,9 @@ class Tree_collection{
 	 string inputFile;
 	 string outputFile;
 	 AVL_Tree newAVLTree;
-	 SpeciesName newTreeSpecies(string s = " ");
+	 TreeSpecies newTreeSpecies;
+	 vector<Vector3d> boroughList;
+	 //typedef pair<string, int> boroPair;
 };
 
 
