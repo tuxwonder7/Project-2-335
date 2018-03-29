@@ -4,6 +4,20 @@
 
 using namespace std;
 Tree::Tree(){}
+Tree::Tree ( int id, int diam, string status, string health, string spc, int zip, string addr, string boro, double latitude, double longitude ) : tree_id(id), tree_dbh(diam), status(status), health(health),spc_common(spc), zipcode(zip), address(addr), boroname(boro), latitude(latitude), longitude(longitude){}
+Tree::Tree(string currSPC, int treeID) : spc_common(currSPC){
+ 	specInfo =  " ";
+	 tree_id = 0;
+	 tree_dbh = 0;
+	 status = " ";
+	 health =  " ";
+	 address =  " ";
+	 boroname =  " ";
+	 zipcode =  0;
+	 latitude = 0;
+	 longitude = 0;
+
+}
 Tree::Tree(const Tree& x){
 	 allInfo = x.allInfo;
 	 spc_common =  x.spc_common;

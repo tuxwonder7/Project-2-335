@@ -383,6 +383,17 @@
 
 
 
+	/* AVL_Tree::treeNode *AVL_Tree::find( const Tree & x, treeNode *t ) const
+        {
+        if ( NULL == t )
+		return NULL ;
+	else if ( x < t -> element )
+		return find ( x , t -> leftChild ) ;
+	else if ( t -> element < x )
+		return find ( x , t -> rightChild ) ;
+	else
+	    return t ; // found it
+        }*/
 
 
 
@@ -393,12 +404,34 @@
 
 
 
-
-
-	list < Tree >& AVL_Tree::findallmatches ( const Tree & x ) const{
-	
+	list < Tree > AVL_Tree::findallmatches ( const Tree & x ) const{
+		list<Tree> allMatches;
+		//cout << this->root->element << " ROOOOOOOOOOOOOOOOOOOOOOOOOT " << " and species " << x << endl;
+		findallmatchesRec(x, this->root, allMatches);
+		//cout << allMatches.size() << " The currList size" << endl;
+		//cout << " REEE " << endl;
+		return allMatches;
 	}
-
+	AVL_Tree::treeNode* AVL_Tree::findallmatchesRec( const Tree& x, treeNode *root, list<Tree>& currList) const{
+		//cout << "testarooooo " << endl;
+		if(NULL == root){cout << " NULL " << endl; return NULL;}
+		else if(islessname(x,root->element)){ cout << "Less than  "<< root->element  << endl; return findallmatchesRec(x, root->leftChild, currList);}
+		else if(islessname(root->element, x)){ cout<< "More than  " << root->element  << endl; return findallmatchesRec(x, root->rightChild, currList);}
+		else{
+			if(samename(x,root->element)){ cout << "Equal " << root->element << endl; currList.push_back(root->element); 
+			//cout << "Before left if" << endl;
+				if(root->leftChild != NULL){cout << " made it through left" << endl; return findallmatchesRec(x, root->leftChild, currList);}
+					//if(root->leftChild == NULL){ cout << "Size " << currList.size() << endl; }
+				else if(root->rightChild != NULL){cout << " made it through right" << endl; return findallmatchesRec(x, root->leftChild, currList);}
+				else{ cout << "Size " << currList.size() << endl; return root; }
+				//cout << " AFter left if" << endl;
+			}
+			
+			
+		}
+		
+		
+	} 
 
 
 	unsigned int AVL_Tree::AVL_TreeNodes_count_recursive(const treeNode *root) const

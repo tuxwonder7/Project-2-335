@@ -52,7 +52,7 @@ void Tree_collection::newCensusSystem(stringstream& iFile,stringstream& oFile){
 			//newAVLTree.printTree();
 			//cout << total_tree_count() << " total nodes " << endl;
 			string oak = "london planetree";
-			cout << count_of_tree_species(oak) << " matching species of honeylocust " << endl;
+			cout << count_of_tree_species(oak) << " matching species of london planetree " << endl;
 			//string tempStringboro = "Brooklyn";
 			//cout << count_of_trees_in_boro(tempStringboro) << " What" << endl;
 			inputFileHandling.close();
@@ -66,10 +66,11 @@ void Tree_collection::newCensusSystem(stringstream& iFile,stringstream& oFile){
 			newTreeSpecies.print_all_species(testOStream);
 			while(getline(testOStream,testOstreamstring)){ ostreamV.push_back(testOstreamstring);}
 			//cout << "test" << endl;
-			/*for(int z = 0; z < ostreamV.size(); z++){
+			for(int z = 0; z < ostreamV.size(); z++){
 			
 			cout << ostreamV.at(z) << "  \t " <<  count_of_tree_species(ostreamV.at(z)) << endl;
-			}*/
+			break;
+			}
 			//cout << speciesOstream << endl;
 			//cout << newTreeSpecies.number_of_species() << endl;
 			//cout << boroughList.size() << "THE FUCKING SIZE" << endl;
@@ -87,7 +88,7 @@ void Tree_collection::checkCommandFunc(ifstream &fin, string fileName, Command& 
   	   double    latitude, longitude, distance;
   	   bool      result;
 	cout << "Check command f " << fileName <<  endl;
-	fin.open( fileName, ios::in );
+	fin.open( fileName.c_str(), ios::in );
 	while ( ! fin.eof() ) {
         if ( ! command.get_next(fin) ) {
             if ( ! fin.eof() )
@@ -130,8 +131,20 @@ int Tree_collection::total_tree_count() const{
 int Tree_collection::count_of_tree_species ( const string& species_name ) const{
 	//return newAVLTree.AVL_TreeNodes_count_of_tree_species(species_name);
 	//cout << species_name << " RE NAME RE " << endl;
-	if(species_name == "stump or dead tree"){ return newAVLTree.getTotalSpec("");}
-	return newAVLTree.getTotalSpec(species_name);
+	if(species_name == "stump or dead tree"){ 
+		//cout << " TREEEE AAA " << endl;
+		string tempSpecName = "";
+		Tree newTempTree(tempSpecName, 0);
+		
+		list<Tree> tempListTree = newAVLTree.findallmatches(newTempTree);
+		//cout << "tempListTree size" << tempListTree.size() << endl;
+		return tempListTree.size();
+	}// return newAVLTree.getTotalSpec("");
+	Tree newTempTree(species_name, 0);
+	list<Tree> tempListTree = newAVLTree.findallmatches(newTempTree);
+	//return newAVLTree.getTotalSpec(species_name);
+	return tempListTree.size();
+	
 }
 int Tree_collection::count_of_trees_in_boro( const string& boro_name ) const{
 	//cout << " na " << endl;

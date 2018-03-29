@@ -34,7 +34,7 @@ static const int ALLOWED_IMBALANCE = 1;
             void clear( );
             void insert( const Tree & x );
             void remove( const Tree & x );
-	    list < Tree >& findallmatches ( const Tree & x ) const ;
+	    list < Tree > findallmatches ( const Tree & x ) const ;
             const AVL_Tree & operator=( const AVL_Tree & rhs );
 	    int totalNodes(){ return totalNodeInsert;}
 	    void incrementTotal();
@@ -64,7 +64,8 @@ static const int ALLOWED_IMBALANCE = 1;
 		treeNode(  const Tree& item , treeNode* lt , treeNode*rt, int h = 0 ):element(item), leftChild(lt), rightChild(rt), height( h ) {
 		//cout << item <<  " ITEM " << endl;
 		} //or do element = item (copy constructor maybe needed)
-	    }; treeNode *root;
+	    }; treeNode *root;	
+	    treeNode* findallmatchesRec( const Tree& x, treeNode *root, list<Tree>& currList) const;
             const Tree & elementAt( treeNode *t ) const;
 	    const Tree ITEM_NOT_FOUND;
             void insert( const Tree & x, treeNode * & t ) const;

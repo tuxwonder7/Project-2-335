@@ -23,6 +23,7 @@ class Tree{
 	Tree();
 	Tree ( int id, int diam, string status, string health, string spc, int zip, string addr, string boro, double latitude, double longitude );
 	Tree(const Tree&);
+	Tree(string currSPC, int treeID);
 	//Default constructor to deal with string variable (references but only puts data into private elements
 	Tree(const string & treedata);
 	//Outputs to file through overloaded operator<<
