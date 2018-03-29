@@ -462,13 +462,15 @@ unsigned int count = 1;
 */
 
 
-	 int AVL_Tree::getTotalSpec(const string& species_name) const{ 
+	int AVL_Tree::getTotalSpec(const string& species_name) const{ 
 	 int count = 0; 
+	
 	 for(int x = 0; x < allSpeciesInputed.size(); x++){
 	  if(allSpeciesInputed.at(x) == species_name) count++;
 	   }  
 	 return count;
 	 }
+
 	int AVL_Tree::getTotalBoro(const string& boro_name)const {
 		
  		int count = 0;
@@ -480,6 +482,7 @@ unsigned int count = 1;
 		 }
 		//  cout << count << "De count and thing " << allTreeBoro.at(x)  << endl;
 		}
+		if(count < 1) return 0;
 		return count;
 	    }
 

@@ -24,6 +24,7 @@
 #include <vector>
 #include <set>
 
+
 using namespace std;	
 
 class Tree_collection{
@@ -57,6 +58,7 @@ class Tree_collection{
 	 AVL_Tree newAVLTree;
 	 TreeSpecies newTreeSpecies;
 	 vector<Vector3d> boroughList;
+	 int totalBoroughSize;
 	 //typedef pair<string, int> boroPair;
 };
 
