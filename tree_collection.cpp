@@ -69,7 +69,7 @@ void Tree_collection::newCensusSystem(stringstream& iFile,stringstream& oFile){
 			for(int z = 0; z < ostreamV.size(); z++){
 			
 			cout << ostreamV.at(z) << "  \t " <<  count_of_tree_species(ostreamV.at(z)) << endl;
-			break;
+			//break;
 			}
 			//cout << speciesOstream << endl;
 			//cout << newTreeSpecies.number_of_species() << endl;
@@ -78,7 +78,7 @@ void Tree_collection::newCensusSystem(stringstream& iFile,stringstream& oFile){
 			cout << boroughList.at(x).borosV <<  " and " << boroughList.at(x).boroInt  << endl;
 			}
 			
-			
+			//newAVLTree.printInorder();
 		
 }
 
@@ -154,10 +154,10 @@ list<string> Tree_collection::get_matching_species(const string & species_name) 
 	return newTreeSpecies.get_matching_species(species_name);
 }
 list<string> Tree_collection::get_all_in_zipcode(int zipcode) const{
-
+	return newAVLTree.getAllInZip(zipcode);
 }
 list<string> Tree_collection::get_all_near(double latitude, double longitude, double distance) const{
-
+	return newAVLTree.get_all_near(latitude, longitude, distance);
 }
 //https://gist.github.com/KodeSeeker/8677778
 //Implement to find a node with thing you are looking for (in this case spc_common + borough count) so similar to (if spc_common == ) boroughcount of x ++

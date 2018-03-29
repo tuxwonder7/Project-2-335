@@ -9,13 +9,15 @@
   Modifications  : 
  
 *******************************************************************************/
-
+#define R 6372.8
+#define TO_RAD (3.1415926536 / 180)
 #ifndef _avl_h_
 #define _avl_h_
 #include <iostream>
 #include <list>
 #include <vector>
 #include "tree.h"
+#include <math.h>
 static const int ALLOWED_IMBALANCE = 1;
 
    class AVL_Tree
@@ -43,10 +45,10 @@ static const int ALLOWED_IMBALANCE = 1;
 	    unsigned int AVL_TreeNodes_count_of_tree_species(const string& species_name) const;
 	    int getTotalSpec(const string& species_name) const;
 	    int getTotalBoro(const string& boro_name)const;
-
-
-
-
+	    void printInorder() const;
+	    list<string> getAllInZip(int zipcode) const;
+	    list<string> get_all_near(double latitude, double longitude, double distance ) const;
+	    double haversine(  double lat1, double lon1, double lat2, double lon2) const;
 
 
 
@@ -65,14 +67,18 @@ static const int ALLOWED_IMBALANCE = 1;
 		//cout << item <<  " ITEM " << endl;
 		} //or do element = item (copy constructor maybe needed)
 	    }; treeNode *root;	
+	    void get_all_nearFunc(double latitude, double longitude, double distance, list<string>& tempList,  treeNode * t) const;
+	    void  getAllInZipRec(int zipcode, treeNode* t, list<string>& treeList) const;
 	    treeNode* findallmatchesRec( const Tree& x, treeNode *root, list<Tree>& currList) const;
             const Tree & elementAt( treeNode *t ) const;
 	    const Tree ITEM_NOT_FOUND;
             void insert( const Tree & x, treeNode * & t ) const;
+ 	    void utility_findallmatches(treeNode* t, list<Tree>& treeList, const Tree& x, const Tree& z) const;
             treeNode * findMin( treeNode *t ) const;
             treeNode * findMax( treeNode *t ) const;
             treeNode * find( const Tree & x, treeNode *t ) const;
             void clear( treeNode * & t ) const;
+	    void printInorderRec(treeNode * node) const;
             void printTree( treeNode *t ) const;
             treeNode * clone( treeNode *t ) const;
 	    int totalNodeInsert = 0;

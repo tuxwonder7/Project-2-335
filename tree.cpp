@@ -58,7 +58,7 @@ Tree::Tree(const string & treedata){
 	 status = status = splitString[6];
 	 health = splitString[7];
 	 spc_common = splitString[9];
-	 transform(spc_common.begin(), spc_common.end(), spc_common.begin(), ::tolower);
+	 
 	 address = splitString[24];
 	 stringstream(splitString[25]) >> zipcode ;
 	 boroname = splitString[29];
@@ -81,36 +81,52 @@ string Tree::write(){
 }
 bool operator==(const Tree & t1, const Tree & t2)
 {
-      if((t1.spc_common==t2.spc_common )&&(t1.tree_id==t2.tree_id))
-      return true;
-      else
-      return false;
-       
+     	string temp1 = t1.spc_common;
+	string temp2 = t2.spc_common;
+	transform(temp1.begin(), temp1.end(), temp1.begin(), ::tolower);
+	transform(temp2.begin(), temp2.end(), temp2.begin(), ::tolower);
+	if(temp1==temp2 ) return true;
+	 else return false;
 }
 
 bool operator<(const Tree & t1, const Tree & t2)
 {
-      if(t1.spc_common.compare(t2.spc_common) < 0)
+	string temp1 = t1.spc_common;
+	string temp2 = t2.spc_common;
+	transform(temp1.begin(), temp1.end(), temp1.begin(), ::tolower);
+	transform(temp2.begin(), temp2.end(), temp2.begin(), ::tolower);
+	//cout << "temp1 " << temp1 << " and temp2 " << temp2 << endl;
+      if(temp1 < temp2){
 	return true;
-      else if(t1.spc_common.compare(t2.spc_common) == 0){
+      }
+      else if(temp1 == temp2){
 	if (t1.tree_id < t2.tree_id)
 		return true;
 	else 
 		return false;
       }
-      else
-		return false;
+      else{
+		return false;}
 }
 Tree& Tree::operator=(const Tree& rhs){
 	cout << "Test" << endl;
 }
 
 bool samename(const Tree & t1,const Tree & t2){
-	 if(t1.spc_common==t2.spc_common ) return true;
+	string temp1 = t1.spc_common;
+	string temp2 = t2.spc_common;
+	transform(temp1.begin(), temp1.end(), temp1.begin(), ::tolower);
+	transform(temp2.begin(), temp2.end(), temp2.begin(), ::tolower);
+	 if(temp1==temp2 ) return true;
 	 else return false;
 }
 bool islessname(const Tree & t1,const Tree & t2){
-	if(t1.spc_common < t2.spc_common) return true;
+	string temp1 = t1.spc_common;
+	string temp2 = t2.spc_common;
+	transform(temp1.begin(), temp1.end(), temp1.begin(), ::tolower);
+	transform(temp2.begin(), temp2.end(), temp2.begin(), ::tolower);
+	
+	if(temp1 < temp2) return true;
 	else return false;
 }
 string Tree::common_name() const{
