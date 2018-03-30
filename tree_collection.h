@@ -35,15 +35,25 @@ class Tree_collection{
 	//bool inputVerify(stringstream& iFile,stringstream& oFile, stringstream& iV, bool* sucessfulHandling);
 	//Creates new system to use the census system, pushes input file, output file, and the current seed, assumed to have been checked
 	void newCensusSystem(stringstream& iFile,stringstream& oFile);
+	//gets total tree count
 	int total_tree_count() const;
+	//gets the total count of the tree species
 	int count_of_tree_species ( const string& species_name ) const;
+	//gets the total amounts of boroughts with their trees
 	int count_of_trees_in_boro( const string& boro_name ) const;
+	//gets a list of all matching species
 	list<string> get_matching_species(const string & species_name) const;
+	//gets a list of all tres in zipcode
 	list<string> get_all_in_zipcode(int zipcode) const;
+	//returns a list of tree to help implement a check on borough species relation
 	list<Tree> count_of_tree_speciesAlternative( const string& species_name ) const;
+	//gets a list of all nearby trees to distance
 	list<string> get_all_near(double latitude, double longitude, double distance) const;
+	//Command function to check and input commands and implement them in other functions
 	void checkCommandFunc(ifstream &fin, string fileName, Command& command);
+	//tree info function to implement tree info function (uses speciesAlternative)
 	void tree_info_func(string treename);
+	//Used for borough container as it contains borough name and integer attached
 	struct Vector3d{
 	string borosV = "";
 	int boroInt = 0;

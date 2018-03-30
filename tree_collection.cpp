@@ -13,7 +13,21 @@ void Tree_collection::newCensusSystem(stringstream& iFile,stringstream& oFile){
 		 ifstream inputFileHandling;
 		 inputFileHandling.open(inputFile.c_str());
 		 ifstream secondFileHandling;
-		
+				 boroughList.push_back(Vector3d());
+				boroughList[boroughList.size()-1].borosV = "Queens";
+				boroughList[boroughList.size()-1].boroInt = 0;
+				boroughList.push_back(Vector3d());
+				boroughList[boroughList.size()-1].borosV = "Brooklyn";
+				boroughList[boroughList.size()-1].boroInt =0;
+				boroughList.push_back(Vector3d());
+				boroughList[boroughList.size()-1].borosV = "Manhattan";
+				boroughList[boroughList.size()-1].boroInt = 0;
+				boroughList.push_back(Vector3d());
+				boroughList[boroughList.size()-1].borosV = "Staten Island";
+				boroughList[boroughList.size()-1].boroInt = 0;
+				boroughList.push_back(Vector3d());
+				boroughList[boroughList.size()-1].borosV = "Bronx";
+				boroughList[boroughList.size()-1].boroInt = 0;
 		bool endofFile = false;
 		int count = 0;
 		bool inList = false;
@@ -209,6 +223,9 @@ void Tree_collection::tree_info_func(string treename){
 	}
 				vector <Vector3d> boroughListTreeFunREAL;
 				boroughListTreeFunREAL.push_back(Vector3d());
+				boroughListTreeFunREAL[boroughListTreeFunREAL.size()-1].borosV = "New York";
+				boroughListTreeFunREAL[boroughListTreeFunREAL.size()-1].boroInt = 0;
+				boroughListTreeFunREAL.push_back(Vector3d());
 				boroughListTreeFunREAL[boroughListTreeFunREAL.size()-1].borosV = "Queens";
 				boroughListTreeFunREAL[boroughListTreeFunREAL.size()-1].boroInt = 0;
 				boroughListTreeFunREAL.push_back(Vector3d());
@@ -224,7 +241,7 @@ void Tree_collection::tree_info_func(string treename){
 				boroughListTreeFunREAL[boroughListTreeFunREAL.size()-1].borosV = "Bronx";
 				boroughListTreeFunREAL[boroughListTreeFunREAL.size()-1].boroInt = 0;
 	inList = false;
-	//cout << boroughListTreeFunVec.size() << " " << boroughListTreeFunVec.at(0).size() << " " << boroughListTreeFunVec.at(1).size() << endl;
+	
 	for(int z = 0; z < boroughListTreeFunVec.size(); z++){
 		inList = false;
 		for(int x = 0; x <  boroughListTreeFunVec.at(z).size(); x++){
@@ -232,8 +249,6 @@ void Tree_collection::tree_info_func(string treename){
 			totalCount++;
 		
 			for(int a = 0; a < boroughListTreeFunREAL.size(); a++){
-				//cout << x << endl;
-				//cout << boroughListTreeFunREAL.at(a).borosV << " and " << boroughListTreeFunVec.at(z).at(a).borosV << " and boro int " << boroughListTreeFunREAL[a].boroInt << endl ;
 				if(boroughListTreeFunREAL.at(a).borosV == boroughListTreeFunVec.at(z).at(x).borosV){boroughListTreeFunREAL[a].boroInt++;  inList = true; break;}
 			}
 			
@@ -247,14 +262,16 @@ void Tree_collection::tree_info_func(string treename){
 		}
 	}
 
-	for(int x = 0; x < boroughListTreeFunREAL.size(); x++){
-			//cout << boroughListTreeFunREAL.at(x).borosV <<  " and " << boroughListTreeFunREAL.at(x).boroInt  << endl;
-	}
 	
-	static const int arr[] = { totalCount, boroughListTreeFunREAL.at(3).boroInt, boroughListTreeFunREAL.at(2).boroInt, boroughListTreeFunREAL.at(1).boroInt, boroughListTreeFunREAL.at(0).boroInt, boroughListTreeFunREAL.at(4).boroInt};
+	
+	static const int arr[] = { totalCount, boroughListTreeFunREAL.at(1).boroInt, boroughListTreeFunREAL.at(2).boroInt, boroughListTreeFunREAL.at(3).boroInt, boroughListTreeFunREAL.at(4).boroInt, boroughListTreeFunREAL.at(5).boroInt};
 	vector<int> TrueValue (arr, arr + sizeof(arr) / sizeof(arr[0]) );
-	for(int x = 0; x < boroughList.size(); x++){
-			cout <<  setw(25) << boroughList.at(x).borosV <<  setw(15) << std::internal << TrueValue[x] << setw(20) << "(      " << boroughList.at(x).boroInt << " )"  << endl;
+	
+	for(int x = 0; x < boroughListTreeFunREAL.size(); x++){
+			cout <<  setw(25) << boroughList.at(x).borosV <<  setw(15) << std::internal << TrueValue[x] << setw(20) << "(      " << boroughList.at(x).boroInt << " )"
+			<< setw(25);
+			if(TrueValue[x] != 0){ cout << ((double)TrueValue[x]/(double)boroughList.at(x).boroInt)*100.00 << "%"  << endl;}
+			else{ cout << "0.00%" << endl;}
 			
 	}
 	
@@ -285,7 +302,7 @@ list<Tree> Tree_collection::count_of_tree_speciesAlternative( const string& spec
 
 
 int Tree_collection::total_tree_count() const{
-	//newAVLTree.AVL_TreeNodes_count();
+	
 	return newAVLTree.AVL_TreeNodes_count();
 }
 
@@ -302,8 +319,10 @@ int Tree_collection::count_of_tree_species ( const string& species_name ) const{
 	
 }
 int Tree_collection::count_of_trees_in_boro( const string& boro_name ) const{
-	//cout << " na " << endl;
-	return newAVLTree.getTotalBoro(boro_name);
+	for(int x = 0; x < boroughList.size(); x++){
+		if(boroughList.at(x).borosV == boro_name) return boroughList.at(x).boroInt;
+	}
+	
 }
 list<string> Tree_collection::get_matching_species(const string & species_name) const{
 	return newTreeSpecies.get_matching_species(species_name);

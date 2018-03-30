@@ -45,8 +45,13 @@
           remove(x, root);
         }
 
-	AVL_Tree::AVL_Tree ( const AVL_Tree & Tree ): root(Tree.getRoot()){
-		
+	AVL_Tree::AVL_Tree ( const AVL_Tree & Tree ){
+		if( root != Tree.getRoot() )
+           	 {
+                clear( );
+                root = clone( Tree.getRoot() );
+           	 }
+            
 	}
 	AVL_Tree::treeNode* AVL_Tree::getRoot() const{
 		return this->root;
@@ -169,11 +174,6 @@
             if( t == NULL ){
 		
                 t = new treeNode( x, NULL, NULL );
-		//cout << " THINGGGG " << t->element.borough_name() << endl;
-		const_cast<AVL_Tree *>(this)->allTreeBoro.push_back(t->element.borough_name());
-		const_cast<AVL_Tree *>(this)->allSpeciesInputed.push_back(t->element.common_name());
-		//const_cast<AVL_Tree *>(this)->allSpeciesIDInputed.push_back(t->element.currID());
-		
 		}
             else if( x < t->element )
             {
@@ -203,8 +203,7 @@
          * Internal method to find the smallest item in a subtree t.
          * Return node containing the smallest item.
          */
-        void AVL_Tree::incrementTotal(){ totalNodeInsert++; }
-	void AVL_Tree::decrementTotal(){ totalNodeInsert--; }
+       
         AVL_Tree::treeNode * AVL_Tree::findMin( treeNode *t ) const
         {
             if( t == NULL)
@@ -515,9 +514,6 @@
 
 
 	
-	AVL_Tree::treeNode* AVL_Tree::findallmatchesRec( const Tree& x, treeNode *root, list<Tree>& currList) const{
-	
-	} 
 	
 
 
@@ -563,50 +559,6 @@
 		AVL_TreeNodes_count_of_tree_species_recursive( species_name , root -> leftChild );	
 	  }
 	}
-
-
-/*
-
-unsigned int count = 1;
-	    cout << species_name << " and " << root -> element.common_name() << root->element.zip() << endl;
-	    if ((root->leftChild != NULL) && ( species_name < root -> element.common_name())) {
-		cout << "test1" << endl;
-	       count += AVL_TreeNodes_count_of_tree_species_recursive(species_name, root->leftChild);
-	    }
-	    if ((root->rightChild != NULL) && ( root -> element.common_name() < species_name  )) {
-		cout << "test2" << endl;
-		if(r
-		count += AVL_TreeNodes_count_of_tree_species_recursive(species_name, root->rightChild);
-	    }
-	    return count;
-*/
-
-
-	int AVL_Tree::getTotalSpec(const string& species_name) const{ 
-	 int count = 0; 
-	
-	 for(int x = 0; x < allSpeciesInputed.size(); x++){
-	  if(allSpeciesInputed.at(x) == species_name) count++;
-	   }  
-	 return count;
-	 }
-
-	int AVL_Tree::getTotalBoro(const string& boro_name)const {
-		
- 		int count = 0;
-		//cout << " reetree boro count " << allTreeBoro.size() << endl;
-		for(int x = 0; x < allTreeBoro.size(); x++){
-		 if(allTreeBoro.at(x) == boro_name){
-		  
-		  count++;
-		 }
-		//  cout << count << "De count and thing " << allTreeBoro.at(x)  << endl;
-		}
-		if(count < 1) return 0;
-		return count;
-	    }
-
-
 
 
 

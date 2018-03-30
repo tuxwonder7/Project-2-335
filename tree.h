@@ -1,5 +1,5 @@
 /*******************************************************************************
-  Title          : inputHandler.h
+  Title          : tree.h
   Author         : Francis Irizarry
   Created on     : Feb 26, 2018
   Description    : The interface file for the tree class, represents object called tree with name, location, etc
@@ -29,17 +29,29 @@ class Tree{
 	Tree(const string & treedata);
 	//Outputs to file through overloaded operator<<
 	friend ostream& operator<< (ostream & os, const Tree & t);
+	//Checks equality
 	friend bool operator==(const Tree&t1, const Tree &t2);
+	//Checks if less than (Tree name and ID)
 	friend bool operator<(const Tree & t1, const Tree & t2);
+	//Checks if trees are equal
 	Tree& operator=(const Tree& other);
+	//Checks if equal than (Tree name)
 	friend bool samename(const Tree & t1,const Tree & t2);
+	//Checks if less than (Tree name)
 	friend bool islessname(const Tree & t1,const Tree & t2);
+	//returns common name of tree
 	string common_name() const;
+	//returns borough tree is in
 	string borough_name() const; 
+	//returns nearby address where tree is located
 	string nearest_address() const;
-	int diameter() const; 
+	//returns diameter of tree
+	int diameter() const;
+	//returns zip of tree 
 	int zip() const;
+	//returns currID of tree
 	int currID() const;
+	//returns position where tree is
 	void get_position(double & latitude,double & longitude) const;
 
 	//Not used currrently but returns string of elements in specific fashion
