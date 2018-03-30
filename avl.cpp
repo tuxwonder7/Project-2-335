@@ -44,6 +44,14 @@
         {
           remove(x, root);
         }
+
+	AVL_Tree::AVL_Tree ( const AVL_Tree & Tree ): root(Tree.getRoot()){
+		
+	}
+	AVL_Tree::treeNode* AVL_Tree::getRoot() const{
+		return this->root;
+	}
+
 	void AVL_Tree::remove ( const Tree & x , treeNode * & t ){
 		if ( t == NULL )
 		t = new treeNode ( x , NULL , NULL ) ;

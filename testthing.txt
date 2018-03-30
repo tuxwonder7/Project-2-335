@@ -1,3 +1,4 @@
 tree_info oak
-list_near 1 1 10000000000000000000000000
+list_near 1 1 10000000
 listall_names
+listall_inzip 11375

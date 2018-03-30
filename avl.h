@@ -26,7 +26,7 @@ static const int ALLOWED_IMBALANCE = 1;
             AVL_Tree();
             AVL_Tree( const Tree & notFound);
             ~AVL_Tree( );
-
+	    AVL_Tree ( const AVL_Tree & Tree );
             const Tree & findMin( ) const;
             const Tree & findMax( ) const;
             const Tree & find( const Tree & x ) const;
@@ -46,6 +46,7 @@ static const int ALLOWED_IMBALANCE = 1;
 	    int getTotalSpec(const string& species_name) const;
 	    int getTotalBoro(const string& boro_name)const;
 	    void printInorder() const;
+	    
 	    list<string> getAllInZip(int zipcode) const;
 	    list<string> get_all_near(double latitude, double longitude, double distance ) const;
 	    double haversine(  double lat1, double lon1, double lat2, double lon2) const;
@@ -66,7 +67,8 @@ static const int ALLOWED_IMBALANCE = 1;
 		treeNode(  const Tree& item , treeNode* lt , treeNode*rt, int h = 0 ):element(item), leftChild(lt), rightChild(rt), height( h ) {
 		//cout << item <<  " ITEM " << endl;
 		} //or do element = item (copy constructor maybe needed)
-	    }; treeNode *root;	
+	    }; treeNode *root;
+	    treeNode* getRoot() const;	
 	    void get_all_nearFunc(double latitude, double longitude, double distance, list<string>& tempList,  treeNode * t) const;
 	    void  getAllInZipRec(int zipcode, treeNode* t, list<string>& treeList) const;
 	    treeNode* findallmatchesRec( const Tree& x, treeNode *root, list<Tree>& currList) const;

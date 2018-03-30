@@ -6,7 +6,7 @@ Tree_collection::Tree_collection(){
 }
 
 void Tree_collection::newCensusSystem(stringstream& iFile,stringstream& oFile){
-		 cout << "What " << endl;
+		
 		 iFile >> inputFile;
 		 oFile >> outputFile;
 		 //pseudoServer newServer;
@@ -48,44 +48,13 @@ void Tree_collection::newCensusSystem(stringstream& iFile,stringstream& oFile){
 		boroughList.insert(boroughList.begin(), Vector3d());
 		boroughList[0].borosV = "New York City";
 		boroughList[0].boroInt = total_tree_count();
-		//int totalBoroughs = boroughList[0].borosV.size();
+	
 		 totalBoroughSize = boroughList.size();//99
-			//newAVLTree.printTree();
-			//cout << total_tree_count() << " total nodes " << endl;
-			//string oak = "london planetree";
-			//cout << count_of_tree_species(oak) << " matching species of london planetree " << endl;
-			//string tempStringboro = "Brooklyn";
-			//cout << count_of_trees_in_boro(tempStringboro) << " What" << endl;
+
 			inputFileHandling.close();
 			 Command currCommands;
 			 checkCommandFunc(secondFileHandling, outputFile, currCommands);//Basically need to take string, run through tree-species to see if it matches, take list and pass it and use it
-			/*//ostream speciesOstream;
-			//ostream allSpecStream(nullptr);
-			stringstream testOStream;
-			string testOstreamstring;
-			vector<string> ostreamV;
-			newTreeSpecies.print_all_species(testOStream);
-			while(getline(testOStream,testOstreamstring)){ ostreamV.push_back(testOstreamstring);}
-			//cout << "test" << endl;
-			for(int z = 0; z < ostreamV.size(); z++){
-			
-			cout << ostreamV.at(z) << "  \t " <<  count_of_tree_species(ostreamV.at(z)) << endl;
-			//break;
-			}
-			//cout << speciesOstream << endl;
-			//cout << newTreeSpecies.number_of_species() << endl;
-			//cout << boroughList.size() << "THE FUCKING SIZE" << endl;
-			for(int x = 0; x < boroughList.size(); x++){
-			cout << boroughList.at(x).borosV <<  " and " << boroughList.at(x).boroInt  << endl;
-			}
-			list<string> tempNearList = get_all_near(1,1,10000000000);
-			cout << "test" << endl;
-			//for (std::list<string>::const_iterator iterator = tempNearList.begin(), end = tempNearList.end(); iterator != end; ++iterator) {
-   			// std::cout << *iterator << "      " ;
-			//}
-			
-			//newAVLTree.printInorder();
-			*/
+		
 }
 
 void Tree_collection::checkCommandFunc(ifstream &fin, string fileName, Command& command){
@@ -125,9 +94,12 @@ void Tree_collection::checkCommandFunc(ifstream &fin, string fileName, Command& 
 		string item;
 			int count = 1;
 			int extcount = 0;
+			int extBlank = 0;
 			for (std::list<string>::const_iterator iterator = treeList.begin(), end = treeList.end(); iterator != end; ++iterator) {
-   			 if(*iterator == "")
-			 cout << "\tDead or stump";
+   			 if(*iterator == ""){
+			 if(extBlank == 0)cout << setw(25) << " Dead or stump " <<setw(20);
+			  extBlank++;
+			 }
 			 if(item == *iterator){
 				count++;
 			 }
@@ -135,27 +107,33 @@ void Tree_collection::checkCommandFunc(ifstream &fin, string fileName, Command& 
 			  cout << count << endl;
 			  count = 1;
 			  item = *iterator;
-			  cout << "\t" << item << " ";
+			  cout << setw(25) << item <<  setw(20);
 			 }
 			 else if(extcount == 0){
 			  item = *iterator;
-			  cout << "\t" << item << " ";
+			  cout << setw(25) << item <<  setw(20);
 			 }
 			 extcount++;
-	 			}	
-		cout << endl;
+	 		
+	
+			}
+		 cout << count << endl;
+			
 		}
                 break;
             case listall_inzip_cmmd:
                	{
-			cout << "listall_inzip_cmmd" << endl;
+			cout << "listall_inzip_cmmd   " << zipcode <<  endl;
 			list<string> treetemp = get_all_in_zipcode(zipcode);
 			string item;
 			int count = 1;
 			int extcount = 0;
+			int extBlank = 0;
 			for (std::list<string>::const_iterator iterator = treetemp.begin(), end = treetemp.end(); iterator != end; ++iterator) {
-   			 if(*iterator == "")
-			 cout << "\tDead or stump";
+   			if(*iterator == ""){
+			 if(extBlank == 0)cout << setw(25) << "Dead or stump " <<  setw(20);
+			  extBlank++;
+			 }
 			 if(item == *iterator){
 				count++;
 			 }
@@ -163,11 +141,11 @@ void Tree_collection::checkCommandFunc(ifstream &fin, string fileName, Command& 
 			  cout << count << endl;
 			  count = 1;
 			  item = *iterator;
-			  cout << "\t" << item << " ";
+			  cout << setw(25) << item <<  setw(20);
 			 }
 			 else if(extcount == 0){
 			  item = *iterator;
-			  cout << "\t" << item << " ";
+			  cout << setw(25) << item <<  setw(20);
 			 }
 			 extcount++;
 	 		
@@ -208,11 +186,6 @@ void Tree_collection::tree_info_func(string treename){
 		allMatchingSpecTree.push_back(copytempTreeV);
 
 	}
-	//cout << allMatchingSpecTree.size() << " and " << endl;
-	for(int a = 0; a < allMatchingSpecTree.size(); a++){
-	//	cout << " at pos " << a << " the size " << allMatchingSpecTree.at(a).size()<< endl; //at(a).common_name()
-	}
-
 	bool inList = false;
 	
 	for(int z = 0; z < allMatchingSpecTree.size(); z++){
@@ -281,7 +254,7 @@ void Tree_collection::tree_info_func(string treename){
 	static const int arr[] = { totalCount, boroughListTreeFunREAL.at(3).boroInt, boroughListTreeFunREAL.at(2).boroInt, boroughListTreeFunREAL.at(1).boroInt, boroughListTreeFunREAL.at(0).boroInt, boroughListTreeFunREAL.at(4).boroInt};
 	vector<int> TrueValue (arr, arr + sizeof(arr) / sizeof(arr[0]) );
 	for(int x = 0; x < boroughList.size(); x++){
-			cout << "\t" << boroughList.at(x).borosV <<  "            " << TrueValue[x] << " (           "  << boroughList.at(x).boroInt << " )"  << endl;
+			cout <<  setw(25) << boroughList.at(x).borosV <<  setw(15) << std::internal << TrueValue[x] << setw(20) << "(      " << boroughList.at(x).boroInt << " )"  << endl;
 			
 	}
 	
@@ -289,11 +262,7 @@ void Tree_collection::tree_info_func(string treename){
 }
 
 
-//Queens
-//Brooklyn
-//Manhattan
-//Staten Island
-//Bronx
+
 
 
 
@@ -345,14 +314,6 @@ list<string> Tree_collection::get_all_in_zipcode(int zipcode) const{
 list<string> Tree_collection::get_all_near(double latitude, double longitude, double distance) const{
 	return newAVLTree.get_all_near(latitude, longitude, distance);
 }
-//https://gist.github.com/KodeSeeker/8677778
-//Implement to find a node with thing you are looking for (in this case spc_common + borough count) so similar to (if spc_common == ) boroughcount of x ++
-
-// So we would do a  new function that would traverse and find trees with spc_commons with name and borough and return that OR pass our container in and just increment it there!!
-
-
-
-
 
 
 
