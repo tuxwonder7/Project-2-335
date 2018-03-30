@@ -443,11 +443,16 @@
 		 get_all_nearFunc(latitude, longitude, distance, tempList, root);
 		return tempList;
 	}
-	void AVL_Tree::get_all_nearFunc(double latitude, double longitude, double distance, list<string>& tempList, treeNode * t) const{
-		double longitudex, latitudex;
-		t->element.get_position(latitudex, longitudex);
-		int distancex = haversine(latitude, longitude,latitudex, longitudex); 
-		if(distance > distancex){ tempList.push_back(t->element.common_name());}
+	void AVL_Tree::get_all_nearFunc(double latitude, double longitude, double distance, list<string>& tempList, treeNode * node) const{
+		if(node == NULL) return;
+		get_all_nearFunc(latitude, longitude, distance, tempList, node->leftChild);
+		double lat2  = 0;
+		double lon2 = 0;
+		
+		node->element.get_position(lat2, lon2);
+		if(haversine(latitude, longitude, lat2, lon2) < distance)
+			tempList.push_back(node->element.common_name());
+		get_all_nearFunc(latitude, longitude, distance, tempList, node->rightChild);
 	}
 
 
@@ -473,65 +478,37 @@
 
 
 	list < Tree > AVL_Tree::findallmatches ( const Tree & x ) const{
-		/*list<Tree> allMatches;
-		//cout << this->root->element << " ROOOOOOOOOOOOOOOOOOOOOOOOOT " << " and species " << x << endl;
-		findallmatchesRec(x, this->root, allMatches);
-		//cout << allMatches.size() << " The currList size" << endl;
-		//cout << " REEE " << endl;
-		return allMatches;*/
+	
 		list<Tree> allMatches;
-		Tree t1(0,0,"","", x.common_name(), 0, "", "",0,0);
-		Tree t2(999999, 0, "", "", x.common_name(), 0, "", "", 0, 0);
-		utility_findallmatches(root, allMatches, t1, t2);
-		cout << "Size of all matches " << allMatches.size() << endl;
+
+		utility_findallmatches(x, root, allMatches);
 		return allMatches;
 	}
 
-	void AVL_Tree::utility_findallmatches(treeNode* t, list<Tree>& treeList, const Tree& x, const Tree& z) const{
-		if(t == NULL){ return;}
-		/*if(islessname(x,root->element)){
-			utility_findallmatches(t->leftChild, treeList, x, z);
+	void AVL_Tree::utility_findallmatches( const Tree& x, const treeNode* currNode, list<Tree>& allMatches) const{
+		if(currNode == NULL){ return;}
+		else{
+			if(islessname(x, currNode->element)) utility_findallmatches(x, currNode->leftChild, allMatches);
+			else if(islessname(currNode->element, x)) utility_findallmatches(x, currNode->rightChild, allMatches);
+			else if(samename(x, currNode->element)){
+				allMatches.push_back(currNode->element);
+				if(currNode->leftChild != NULL){
+					utility_findallmatches(x, currNode->leftChild, allMatches);
+				}
+				if(currNode->rightChild != NULL){
+					utility_findallmatches(x, currNode->rightChild, allMatches);
+				}
+			}
+
 		}
-		if((islessname(x,root->element)) && (islessname(root->element, z))){
-			treeList.push_back(t->element);
-		}
-		if(islessname(root->element, z)){
-			utility_findallmatches(t->rightChild, treeList, x, z);
-		}*/
-		if(x < t->element){
-			//string testFirstThingx = "true";
-			//string testThing = "";
-			//if(islessname(x,root->element)){ testThing = "true";}else{ testThing = "false";}
-			//cout << "(x < t->element)" << testFirstThingx <<  " anddd thing " << testThing << endl; 
-			utility_findallmatches(t->leftChild, treeList, x, z);
-			//testThing = "";
-		}
-		if((x< t->element) && (t->element < z))
-			treeList.push_back(t->element);
-		if(t->element < z)
-			utility_findallmatches(t->rightChild, treeList, x, z);
+
 
 	}
 
 
 	
 	AVL_Tree::treeNode* AVL_Tree::findallmatchesRec( const Tree& x, treeNode *root, list<Tree>& currList) const{
-		//cout << "testarooooo " << endl;
-		if(NULL == root){cout << " NULL " << endl; return NULL;}
-		if(islessname(x,root->element)){ cout << "Less than  "<< root->element  << endl; return findallmatchesRec(x, root->leftChild, currList);}
-		if(islessname(root->element, x)){ cout<< "More than  " << root->element  << endl; return findallmatchesRec(x, root->rightChild, currList);}
-		if(samename(x,root->element)){ cout << "Equal " << root->element << endl; currList.push_back(root->element); 
-			//cout << "Before left if" << endl;
-				//if(root->leftChild != NULL && samename(x,root->leftChild->element)){cout << " made it through left" << endl; return findallmatchesRec(x, root->leftChild, currList);}
-					//if(root->leftChild == NULL){ cout << "Size " << currList.size() << endl; }
-				//else if(root->rightChild != NULL && samename(x,root->rightChild->element)){cout << " made it through right" << endl; return findallmatchesRec(x, root->leftChild, currList);}
-				cout << "Before if equal " << x << root->leftChild->element<< endl;
-				cout << "\nBefore if equal " << x << root->rightChild->element<< endl;
-				//else{ cout << "Size " << currList.size() << endl; return root; }
-				if(islessname(x,root->leftChild->element)){ cout << "Less than in Equal  "<< root->element  << endl; return findallmatchesRec(x, root->leftChild, currList);}
-				else if(islessname(root->rightChild->element, x)){ cout<< "More than in Equal  " << root->element  << endl; return findallmatchesRec(x, root->rightChild, currList);}
-				//cout << " AFter left if" << endl;
-		}	
+	
 	} 
 	
 

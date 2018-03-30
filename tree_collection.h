@@ -40,9 +40,10 @@ class Tree_collection{
 	int count_of_trees_in_boro( const string& boro_name ) const;
 	list<string> get_matching_species(const string & species_name) const;
 	list<string> get_all_in_zipcode(int zipcode) const;
+	list<Tree> count_of_tree_speciesAlternative( const string& species_name ) const;
 	list<string> get_all_near(double latitude, double longitude, double distance) const;
 	void checkCommandFunc(ifstream &fin, string fileName, Command& command);
-
+	void tree_info_func(string treename);
 	struct Vector3d{
 	string borosV = "";
 	int boroInt = 0;

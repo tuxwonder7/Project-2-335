@@ -73,7 +73,7 @@ static const int ALLOWED_IMBALANCE = 1;
             const Tree & elementAt( treeNode *t ) const;
 	    const Tree ITEM_NOT_FOUND;
             void insert( const Tree & x, treeNode * & t ) const;
- 	    void utility_findallmatches(treeNode* t, list<Tree>& treeList, const Tree& x, const Tree& z) const;
+ 	    void utility_findallmatches( const Tree& x, const treeNode* currNode, list<Tree>& allMatches) const;
             treeNode * findMin( treeNode *t ) const;
             treeNode * findMax( treeNode *t ) const;
             treeNode * find( const Tree & x, treeNode *t ) const;
