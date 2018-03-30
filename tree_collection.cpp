@@ -112,14 +112,70 @@ void Tree_collection::checkCommandFunc(ifstream &fin, string fileName, Command& 
                 break;
 		}
             case listall_names_cmmd:
-                cout << "listall_names_cmmd " << endl;
+                {
+		cout << "listall_names_cmmd " << endl;
+		newTreeSpecies.print_all_species(cout);
+		}
                 break;
             case list_near_cmmd:
+		{
                 cout << "list_near_cmmd " << latitude << " " << longitude
                      << " " << distance  << endl;
+		list<string> treeList = get_all_near(latitude, longitude, distance);
+		string item;
+			int count = 1;
+			int extcount = 0;
+			for (std::list<string>::const_iterator iterator = treeList.begin(), end = treeList.end(); iterator != end; ++iterator) {
+   			 if(*iterator == "")
+			 cout << "\tDead or stump";
+			 if(item == *iterator){
+				count++;
+			 }
+			 else if(extcount != 0){
+			  cout << count << endl;
+			  count = 1;
+			  item = *iterator;
+			  cout << "\t" << item << " ";
+			 }
+			 else if(extcount == 0){
+			  item = *iterator;
+			  cout << "\t" << item << " ";
+			 }
+			 extcount++;
+	 			}	
+		cout << endl;
+		}
                 break;
             case listall_inzip_cmmd:
-                cout << "listall_inzip_cmmd " << zipcode << endl;               
+               	{
+			cout << "listall_inzip_cmmd" << endl;
+			list<string> treetemp = get_all_in_zipcode(zipcode);
+			string item;
+			int count = 1;
+			int extcount = 0;
+			for (std::list<string>::const_iterator iterator = treetemp.begin(), end = treetemp.end(); iterator != end; ++iterator) {
+   			 if(*iterator == "")
+			 cout << "\tDead or stump";
+			 if(item == *iterator){
+				count++;
+			 }
+			 else if(extcount != 0){
+			  cout << count << endl;
+			  count = 1;
+			  item = *iterator;
+			  cout << "\t" << item << " ";
+			 }
+			 else if(extcount == 0){
+			  item = *iterator;
+			  cout << "\t" << item << " ";
+			 }
+			 extcount++;
+	 		
+	
+			}
+		 cout << count << endl;
+			
+		}
                 break;
             case bad_cmmd:
                     cout << "bad command " << endl;
@@ -134,56 +190,110 @@ void Tree_collection::checkCommandFunc(ifstream &fin, string fileName, Command& 
 void Tree_collection::tree_info_func(string treename){
 	cout << "The matching species are: " << endl;
 	list<string> matchingSpecx = get_matching_species(treename);
-	vector<Vector3d> boroughListTreeFun;
+	vector <Vector3d> boroughListTreeFun;
+	vector<vector <Vector3d> > boroughListTreeFunVec;
 	vector<string> matchingSpec;
 	for (std::list<string>::const_iterator iterator = matchingSpecx.begin(), end = matchingSpecx.end(); iterator != end; ++iterator) {
    	 std::cout << *iterator << endl;		
 	 matchingSpec.push_back(*iterator);
+	
 	}
 	cout << "Popularity in the city:" << endl;
-	list<vector<Vector3d> > testNew3dVector;
-	for(int z = 0; z < matchingSpec.size(); z++){
-		testNew3dVector.push_back(boroughListTreeFun);
+	int totalCount = 0;
+	vector< vector<Tree> > allMatchingSpecTree;
+	for(int i = 0; i < matchingSpec.size(); i++){
+		int totalCount = count_of_tree_species(matchingSpec.at(i));
+		list<Tree> tempTree = count_of_tree_speciesAlternative(matchingSpec.at(i));
+		vector<Tree> copytempTreeV(tempTree.begin(), tempTree.end());
+		allMatchingSpecTree.push_back(copytempTreeV);
+
+	}
+	//cout << allMatchingSpecTree.size() << " and " << endl;
+	for(int a = 0; a < allMatchingSpecTree.size(); a++){
+	//	cout << " at pos " << a << " the size " << allMatchingSpecTree.at(a).size()<< endl; //at(a).common_name()
+	}
+
+	bool inList = false;
+	
+	for(int z = 0; z < allMatchingSpecTree.size(); z++){
+		boroughListTreeFunVec.push_back(boroughListTreeFun);
+	 for(int x = 0; x < allMatchingSpecTree.at(z).size(); x++){
+			for(int a = 0; a < boroughListTreeFun.size(); a++){
+				
+				if(boroughListTreeFunVec.at(z).at(a).borosV == allMatchingSpecTree.at(z).at(x).borough_name()){boroughListTreeFunVec.at(z)[a].boroInt++; inList = true;}
+			}
+			
+			if(inList == false){
+			
+			boroughListTreeFunVec.at(z).push_back(Vector3d());
+			
+			boroughListTreeFunVec.at(z)[boroughListTreeFunVec.at(z).size()-1].borosV = allMatchingSpecTree.at(z).at(x).borough_name();
+			
+			boroughListTreeFunVec.at(z)[boroughListTreeFunVec.at(z).size()-1].boroInt = 1;
+			}
+			inList = false;	
+	 }
+	}
+				vector <Vector3d> boroughListTreeFunREAL;
+				boroughListTreeFunREAL.push_back(Vector3d());
+				boroughListTreeFunREAL[boroughListTreeFunREAL.size()-1].borosV = "Queens";
+				boroughListTreeFunREAL[boroughListTreeFunREAL.size()-1].boroInt = 0;
+				boroughListTreeFunREAL.push_back(Vector3d());
+				boroughListTreeFunREAL[boroughListTreeFunREAL.size()-1].borosV = "Brooklyn";
+				boroughListTreeFunREAL[boroughListTreeFunREAL.size()-1].boroInt =0;
+				boroughListTreeFunREAL.push_back(Vector3d());
+				boroughListTreeFunREAL[boroughListTreeFunREAL.size()-1].borosV = "Manhattan";
+				boroughListTreeFunREAL[boroughListTreeFunREAL.size()-1].boroInt = 0;
+				boroughListTreeFunREAL.push_back(Vector3d());
+				boroughListTreeFunREAL[boroughListTreeFunREAL.size()-1].borosV = "Staten Island";
+				boroughListTreeFunREAL[boroughListTreeFunREAL.size()-1].boroInt = 0;
+				boroughListTreeFunREAL.push_back(Vector3d());
+				boroughListTreeFunREAL[boroughListTreeFunREAL.size()-1].borosV = "Bronx";
+				boroughListTreeFunREAL[boroughListTreeFunREAL.size()-1].boroInt = 0;
+	inList = false;
+	//cout << boroughListTreeFunVec.size() << " " << boroughListTreeFunVec.at(0).size() << " " << boroughListTreeFunVec.at(1).size() << endl;
+	for(int z = 0; z < boroughListTreeFunVec.size(); z++){
+		inList = false;
+		for(int x = 0; x <  boroughListTreeFunVec.at(z).size(); x++){
+		
+			totalCount++;
+		
+			for(int a = 0; a < boroughListTreeFunREAL.size(); a++){
+				//cout << x << endl;
+				//cout << boroughListTreeFunREAL.at(a).borosV << " and " << boroughListTreeFunVec.at(z).at(a).borosV << " and boro int " << boroughListTreeFunREAL[a].boroInt << endl ;
+				if(boroughListTreeFunREAL.at(a).borosV == boroughListTreeFunVec.at(z).at(x).borosV){boroughListTreeFunREAL[a].boroInt++;  inList = true; break;}
+			}
+			
+				if(inList == false){
+				boroughListTreeFunREAL.push_back(Vector3d());
+				boroughListTreeFunREAL[boroughListTreeFunREAL.size()-1].borosV = boroughListTreeFunVec.at(z).at(x).borosV;
+				boroughListTreeFunREAL[boroughListTreeFunREAL.size()-1].boroInt = 1;
+			}
+			
+			inList = false;
+		}
+	}
+
+	for(int x = 0; x < boroughListTreeFunREAL.size(); x++){
+			//cout << boroughListTreeFunREAL.at(x).borosV <<  " and " << boroughListTreeFunREAL.at(x).boroInt  << endl;
 	}
 	
-	bool inList = false;
-	vector< list<Tree> > allMatchingSpecTree;
-	for(int i = 0; i < boroughListTreeFun.size(); i++){
-		allMatchingSpecTree.push_back(count_of_tree_speciesAlternative(matchingSpec.at(i)));
-
-	}
-	cout << allMatchingSpecTree.size() << endl;
-	for(int x = 0; x < boroughListTreeFun.size(); x++){
-			//if(boroughList.at(x).borosV == matchingSpec->element.borough_name()){boroughList[x].boroInt++; inList = true;}
-		//for(int z = 0; z < boroughList.size(); z++){
-			/*if(boroughListTreeFun.at(x).borosV == newTree.borough_name()){boroughListTreeFun[x].boroInt++; inList = true;}
-			}
-				if(inList == false){
-				boroughListTreeFun.push_back(Vector3d());
-				boroughListTreeFun[boroughList.size()-1].borosV = newTree.borough_name();
-				boroughListTreeFun[boroughList.size()-1].boroInt = 1;
-			}
-			inList = false;*/
-		
-	}
+	static const int arr[] = { totalCount, boroughListTreeFunREAL.at(3).boroInt, boroughListTreeFunREAL.at(2).boroInt, boroughListTreeFunREAL.at(1).boroInt, boroughListTreeFunREAL.at(0).boroInt, boroughListTreeFunREAL.at(4).boroInt};
+	vector<int> TrueValue (arr, arr + sizeof(arr) / sizeof(arr[0]) );
 	for(int x = 0; x < boroughList.size(); x++){
-			cout << boroughList.at(x).borosV <<  " and " << boroughList.at(x).boroInt  << endl;
+			cout << "\t" << boroughList.at(x).borosV <<  "            " << TrueValue[x] << " (           "  << boroughList.at(x).boroInt << " )"  << endl;
+			
 	}
-	/*if(inList == false){
-	boroughList.push_back(Vector3d());
-	boroughList[boroughList.size()-1].borosV = matchingSpec->element.borough_name();
-	boroughList[boroughList.size()-1].boroInt = 1;
-	matchingSpec.pop_front();
-	}*/
-	for(int x = 0; x < boroughList.size(); x++){
-			cout << boroughList.at(x).borosV <<  "            " << " temp " << " (           "  << boroughList.at(x).boroInt << " )"  << endl;
-	}
-
+	
 
 }
 
 
-
+//Queens
+//Brooklyn
+//Manhattan
+//Staten Island
+//Bronx
 
 
 

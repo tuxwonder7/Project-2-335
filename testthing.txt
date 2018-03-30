@@ -1,2 +1,3 @@
 tree_info oak
 list_near 1 1 10000000000000000000000000
+listall_names
