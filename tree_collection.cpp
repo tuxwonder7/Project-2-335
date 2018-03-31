@@ -264,7 +264,7 @@ void Tree_collection::tree_info_func(string treename){
 
 	
 	
-	static const int arr[] = { totalCount, boroughListTreeFunREAL.at(1).boroInt, boroughListTreeFunREAL.at(2).boroInt, boroughListTreeFunREAL.at(3).boroInt, boroughListTreeFunREAL.at(4).boroInt, boroughListTreeFunREAL.at(5).boroInt};
+	const int arr[] = { totalCount, boroughListTreeFunREAL.at(1).boroInt, boroughListTreeFunREAL.at(2).boroInt, boroughListTreeFunREAL.at(3).boroInt, boroughListTreeFunREAL.at(4).boroInt, boroughListTreeFunREAL.at(5).boroInt};
 	vector<int> TrueValue (arr, arr + sizeof(arr) / sizeof(arr[0]) );
 	
 	for(int x = 0; x < boroughListTreeFunREAL.size(); x++){
